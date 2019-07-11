@@ -1,22 +1,18 @@
 
 export const thetweetUser = (atweet) => {
     let tweet_user = atweet.substring(0, atweet.indexOf('> ')).replace(/\s+/g, '');
-    //console.log(tweet_user);
     return tweet_user;
 }
 export const theTweet = (atweet) => {
     let tweet = atweet.split("> ")[1];
-    //console.log(tweet);
     return tweet;
 }
 
 //FILTER OUT TWEETS FOR SPECIFIC USER
 export const getTweetForUser = (user, tweets) => {
-    //console.log(JSON.stringify(tweets));
     const TweetsForUser = tweets.filter(function (el) {
         return (el.user === user);
     });
-    //console.log(user,"tweets is: ", TweetsForUser);
     return TweetsForUser;
 
 }
@@ -40,7 +36,6 @@ export const getTweets = (tweets) => {
     })
     tweetArray.sort((a, b) => (a.order > b.order) ? 1 : -1);
     //console.table(tweetArray)
-    //console.log(JSON.stringify(tweetArray));
     return tweetArray;
 }
 const theTweets = getTweets(tweets);
@@ -65,10 +60,10 @@ export const outputTweets = (userObj, theTweets) => {
         Array.prototype.push.apply(userFeed,ownTweets);
         userFeed.sort((a, b) => (a.order > b.order) ? 1 : -1);
 
-        /*console.log(user.name);
+        console.log(user.name);
         userFeed.forEach(atweet => {
             console.log("       @"+atweet.user+":"+atweet.tweet+"");
-        })*/
+        })
         tweetFeed.push(userFeed);
         return userFeed;
     })
@@ -84,18 +79,15 @@ export const compileUsers = ( userList, linesFromUsertext) => {
         let following = line.split("follows ")[1].replace(/\s+/g, '');
         let splitFollowing = following.split(',');
         splitFollowing.forEach(follow => {
-            //console.log("adding ",follow ,"to:",follower);
             let userExists = userObj.filter(x => x.name == follower);
             if(userExists.length){
                 let foundIndex = userObj.findIndex(x => x.name == follower);
-                //console.log("found index:",foundIndex);
                 let followingArray = JSON.stringify(userObj[foundIndex].following);
 
                 if(!followingArray.includes(follow)){
                     userObj[foundIndex].following.push(follow);
                 }
             } else {
-                //console.log("user does not exist");
             }
 
         })
@@ -120,7 +112,6 @@ export const getUsers = (users) => {
             }
         })
     })
-    //console.log("Unique User List:" ,JSON.stringify(userList));
     compileUsers(userList, linesFromUsertext);
     return userList;
 
